@@ -33,7 +33,7 @@ button { font:inherit; }
   position:relative;
   overflow:hidden;
   color:#fff;
-  background:#111 url("https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1800&q=82") center/cover no-repeat;
+  background:#111 url("https://images.unsplash.com/photo-1758874089745-72a5f308af86?auto=format&fit=crop&w=1800&q=84") center/cover no-repeat;
 }
 .hero::before {
   content:"";
@@ -141,48 +141,84 @@ h2 {
 .gallery {
   display:grid;
   grid-template-columns:repeat(12,1fr);
-  gap:12px;
+  gap:16px;
 }
 .memory {
   grid-column:span 4;
   border:0;
   padding:0;
-  background:rgba(255,255,255,.82);
-  border-radius:8px;
+  background:#1f2328;
+  border-radius:14px;
   overflow:hidden;
-  border:1px solid rgba(232,222,210,.8);
-  box-shadow:0 18px 50px rgba(31,35,40,.1);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 22px 62px rgba(31,35,40,.12);
   cursor:pointer;
   text-align:left;
   transition:transform .22s ease, box-shadow .22s ease;
+  position:relative;
+  min-height:360px;
+  isolation:isolate;
 }
-.memory:hover { transform:translateY(-3px); box-shadow:0 26px 68px rgba(31,35,40,.14); }
+.memory::after {
+  content:"";
+  position:absolute;
+  inset:36% 0 0;
+  z-index:1;
+  background:linear-gradient(180deg,rgba(20,23,28,0),rgba(20,23,28,.72) 54%,rgba(20,23,28,.9));
+  pointer-events:none;
+}
+.memory:hover { transform:translateY(-4px); box-shadow:0 30px 78px rgba(31,35,40,.18); }
 .memory:nth-child(1), .memory:nth-child(6) { grid-column:span 6; }
 .photo {
   width:100%;
-  aspect-ratio:4 / 3;
+  height:100%;
+  min-height:360px;
   object-fit:cover;
   display:block;
   background:#e5e7eb;
+  transform:scale(1.01);
+  transition:transform .55s ease, filter .55s ease;
+}
+.memory:hover .photo {
+  transform:scale(1.055);
+  filter:saturate(1.05) contrast(1.03);
 }
 .memory-body {
-  padding:15px;
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:2;
+  padding:24px;
+  color:#fff;
 }
 .date {
-  color:var(--gold);
-  font-size:13px;
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+  color:#fff4dc;
+  font-size:12px;
   font-weight:900;
+  letter-spacing:.04em;
+  padding:6px 10px;
+  border:1px solid rgba(255,255,255,.34);
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  backdrop-filter:blur(10px);
 }
 .memory h3 {
-  margin:7px 0 6px;
-  font-size:18px;
+  margin:12px 0 8px;
+  font-size:clamp(19px, 2.4vw, 26px);
   line-height:1.35;
+  letter-spacing:0;
+  text-shadow:0 2px 18px rgba(0,0,0,.28);
 }
 .memory p {
   margin:0;
-  color:var(--muted);
-  line-height:1.55;
+  color:rgba(255,255,255,.82);
+  line-height:1.6;
   font-size:14px;
+  max-width:34em;
 }
 .timeline {
   display:grid;
@@ -317,6 +353,8 @@ footer {
   .stats { grid-template-columns:repeat(2,1fr); }
   .gallery { grid-template-columns:1fr; }
   .memory, .memory:nth-child(1), .memory:nth-child(6) { grid-column:auto; }
+  .memory, .photo { min-height:330px; }
+  .memory-body { padding:20px; }
   .letter { grid-template-columns:1fr; }
   .letter-img { min-height:300px; }
   .letter-card { padding:22px; }
@@ -452,11 +490,11 @@ function renderMemories() {
   grid.innerHTML = memories.map((item, index) => `
     <button class="memory" type="button" data-index="${index}">
       <img class="photo" src="${item.image}" alt="${item.title}" loading="lazy" />
-      <span class="memory-body">
+      <div class="memory-body">
         <span class="date">${item.date}</span>
         <h3>${item.title}</h3>
         <p>${item.desc}</p>
-      </span>
+      </div>
     </button>
   `).join("");
 
