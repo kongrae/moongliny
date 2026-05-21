@@ -168,7 +168,7 @@ h2 {
   pointer-events:none;
 }
 .memory:hover { transform:translateY(-4px); box-shadow:0 30px 78px rgba(31,35,40,.18); }
-.memory:nth-child(1), .memory:nth-child(6) { grid-column:span 6; }
+.memory:nth-child(1), .memory:nth-child(4) { grid-column:span 6; }
 .photo {
   width:100%;
   height:100%;
@@ -219,6 +219,17 @@ h2 {
   line-height:1.6;
   font-size:14px;
   max-width:34em;
+}
+.album-count {
+  display:inline-flex;
+  margin-top:14px;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(10px);
 }
 .timeline {
   display:grid;
@@ -309,16 +320,20 @@ h2 {
 }
 .modal.open { display:grid; }
 .modal-card {
-  width:min(920px,100%);
+  width:min(1040px,100%);
+  max-height:92svh;
   background:#fff;
   border-radius:8px;
   overflow:hidden;
+  overflow-y:auto;
 }
-.modal-card img {
+.modal-hero img,
+.modal-hero video {
   width:100%;
-  max-height:72svh;
+  max-height:62svh;
   object-fit:cover;
   display:block;
+  background:#111;
 }
 .modal-text {
   padding:16px 18px 18px;
@@ -329,6 +344,26 @@ h2 {
 }
 .modal-text h3 { margin:0 0 6px; }
 .modal-text p { margin:0; color:var(--muted); line-height:1.55; }
+.album-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:0 18px 18px;
+}
+.album-tile {
+  min-height:180px;
+  border-radius:8px;
+  overflow:hidden;
+  background:#111;
+}
+.album-tile img,
+.album-tile video {
+  width:100%;
+  height:100%;
+  min-height:180px;
+  object-fit:cover;
+  display:block;
+}
 .close {
   border:1px solid var(--line);
   background:#fff;
@@ -352,13 +387,15 @@ footer {
   .section-title p { margin-top:10px; }
   .stats { grid-template-columns:repeat(2,1fr); }
   .gallery { grid-template-columns:1fr; }
-  .memory, .memory:nth-child(1), .memory:nth-child(6) { grid-column:auto; }
+  .memory, .memory:nth-child(1), .memory:nth-child(4) { grid-column:auto; }
   .memory, .photo { min-height:330px; }
   .memory-body { padding:20px; }
   .letter { grid-template-columns:1fr; }
   .letter-img { min-height:300px; }
   .letter-card { padding:22px; }
   .modal-text { align-items:center; }
+  .album-grid { grid-template-columns:1fr; }
+  .album-tile, .album-tile img, .album-tile video { min-height:260px; }
 }
 </style>
 </head>
@@ -378,7 +415,7 @@ footer {
 <section class="section">
   <div class="section-title">
     <h2>숫자로 보는 우리</h2>
-    <p>2025년 5월 27일부터 차곡차곡 쌓인 시간. 아직 샘플이지만 분위기는 이미 1주년 모드입니다.</p>
+    <p>2025년 5월 27일부터 차곡차곡 쌓인 시간. 여름에 시작해서 다시 봄까지, 꽤 근사하게 달려왔습니다.</p>
   </div>
   <div class="stats">
     <div class="stat"><b id="daysTogether">365</b><span>함께한 날</span></div>
@@ -390,8 +427,8 @@ footer {
 
 <section class="section" id="gallery">
   <div class="section-title">
-    <h2>우리의 사진첩</h2>
-    <p>샘플 사진을 눌러 크게 볼 수 있어요. 실제 사진은 나중에 파일명만 바꾸면 됩니다.</p>
+    <h2>계절별 앨범</h2>
+    <p>5월 27일부터 시작된 첫해를 여름, 가을, 겨울, 봄 순서로 담았어요.</p>
   </div>
   <div class="gallery" id="galleryGrid"></div>
 </section>
@@ -399,14 +436,14 @@ footer {
 <section class="section">
   <div class="section-title">
     <h2>시간순으로 꺼내보기</h2>
-    <p>특별했던 날들을 짧은 문장으로 이어두면, 페이지가 작은 앨범처럼 느껴집니다.</p>
+    <p>계절마다 달랐던 온도와 분위기를 짧은 문장으로 묶어봤어요.</p>
   </div>
   <div class="timeline" id="timeline"></div>
 </section>
 
 <section class="section" id="letter">
   <div class="letter">
-    <div class="letter-img" aria-label="커플 샘플 사진"></div>
+    <div class="letter-img" aria-label="커플 사진"></div>
     <div class="letter-card">
       <p>우리 벌써 1년이라니, 시간은 빠른데 나는 아직도 네가 웃으면 잠깐 멈칫하는 사람으로 살고 있어.</p>
       <p>지난 1년 동안 같이 웃고, 먹고, 걷고, 가끔은 아무 말 없이 있어도 편했던 순간들이 생각보다 많이 쌓였더라. 솔직히 이 정도면 우리 꽤 잘하고 있는 팀 아닐까?</p>
@@ -418,14 +455,14 @@ footer {
 
 <section class="section">
   <div class="replace-guide">
-    <b>사진 교체 메모</b><br>
-    나중에 실제 사진을 고르면 이 폴더에 <code>photos</code> 폴더를 만들고, HTML 안의 <code>memories</code> 배열에서 <code>image</code> 값을 <code>photos/사진파일명.jpg</code>로 바꾸면 됩니다.
+    <b>우리의 첫해</b><br>
+    뜨거웠던 시작, 선선해진 마음, 추운 날의 온기, 다시 피어난 봄까지. 계절은 바뀌었고 우리는 조금 더 우리다워졌어요.
   </div>
 </section>
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal-card">
-    <img id="modalImg" alt="" />
+    <div class="modal-hero" id="modalHero"></div>
     <div class="modal-text">
       <div>
         <h3 id="modalTitle"></h3>
@@ -433,6 +470,7 @@ footer {
       </div>
       <button class="close" id="closeModal" type="button" aria-label="닫기">×</button>
     </div>
+    <div class="album-grid" id="modalAlbum"></div>
   </div>
 </div>
 
@@ -442,49 +480,67 @@ footer {
 const anniversaryStart = "2025-05-27";
 const memories = [
   {
-    date: "첫 만남",
-    title: "처음 마주 보고 웃었던 날",
-    desc: "조금 어색했지만 이상하게 오래 기억에 남았던 시작.",
-    image: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1200&q=82"
+    date: "2025 여름",
+    title: "여름, 우리라는 계절의 시작",
+    desc: "5월 27일 이후의 첫 계절. 서툴고 뜨거웠지만, 그래서 더 선명했던 시작.",
+    image: "assets/seasons/summer-1.jpg",
+    media: [
+      { type:"image", src:"assets/seasons/summer-1.jpg", alt:"여름 첫 사진" },
+      { type:"image", src:"assets/seasons/summer-2.jpg", alt:"여름 두 번째 사진" }
+    ]
   },
   {
-    date: "봄",
-    title: "손잡고 걷던 산책길",
-    desc: "별일 없는 길도 같이 걸으면 기분 좋은 하루가 됐어.",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=82"
+    date: "2025 가을",
+    title: "가을, 조금 더 우리답게",
+    desc: "바람이 선선해질수록 마음은 더 가까워졌고, 평범한 하루도 같이 있으면 장면이 됐어.",
+    image: "assets/seasons/autumn-2.jpg",
+    media: [
+      { type:"video", src:"assets/seasons/autumn-1.mp4", alt:"가을 영상" },
+      { type:"image", src:"assets/seasons/autumn-2.jpg", alt:"가을 사진" }
+    ]
   },
   {
-    date: "여름",
-    title: "햇빛이 좋았던 여행",
-    desc: "사진보다 더 선명하게 남아 있는 바람과 웃음.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=82"
+    date: "2025 겨울",
+    title: "겨울, 따뜻한 쪽으로",
+    desc: "차가운 계절에도 함께 있으면 이상하게 온도가 올라갔던 날들.",
+    image: "assets/seasons/winter-1.jpg",
+    media: [
+      { type:"image", src:"assets/seasons/winter-1.jpg", alt:"겨울 첫 사진" },
+      { type:"image", src:"assets/seasons/winter-2.jpg", alt:"겨울 두 번째 사진" },
+      { type:"image", src:"assets/seasons/winter-3.jpg", alt:"겨울 세 번째 사진" },
+      { type:"image", src:"assets/seasons/winter-4.jpg", alt:"겨울 네 번째 사진" }
+    ]
   },
   {
-    date: "가을",
-    title: "카페에서 보낸 오후",
-    desc: "커피 한 잔 사이로 조용히 쌓였던 마음.",
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=82"
-  },
-  {
-    date: "겨울",
-    title: "추워도 따뜻했던 밤",
-    desc: "찬 공기 속에서도 곁에 있어서 괜찮았던 순간.",
-    image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=82"
-  },
-  {
-    date: "오늘",
-    title: "그리고 우리의 1주년",
-    desc: "앞으로 더 많이 찍고, 더 많이 웃고, 더 오래 기억하자.",
-    image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=82"
+    date: "2026 봄",
+    title: "봄, 다시 피어난 우리",
+    desc: "처음의 설렘이 익숙한 편안함으로 바뀌고, 다시 예쁘게 피어난 계절.",
+    image: "assets/seasons/spring-2.jpg",
+    media: [
+      { type:"image", src:"assets/seasons/spring-1.jpg", alt:"봄 첫 사진" },
+      { type:"image", src:"assets/seasons/spring-2.jpg", alt:"봄 두 번째 사진" },
+      { type:"image", src:"assets/seasons/spring-3.jpg", alt:"봄 세 번째 사진" },
+      { type:"image", src:"assets/seasons/spring-4.jpg", alt:"봄 네 번째 사진" },
+      { type:"image", src:"assets/seasons/spring-5.jpg", alt:"봄 다섯 번째 사진" },
+      { type:"image", src:"assets/seasons/spring-6.jpg", alt:"봄 여섯 번째 사진" }
+    ]
   }
 ];
 
 const grid = document.getElementById("galleryGrid");
 const timeline = document.getElementById("timeline");
 const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modalImg");
+const modalHero = document.getElementById("modalHero");
+const modalAlbum = document.getElementById("modalAlbum");
 const modalTitle = document.getElementById("modalTitle");
 const modalDesc = document.getElementById("modalDesc");
+
+function renderMedia(media, isHero = false) {
+  if (media.type === "video") {
+    return `<video src="${media.src}" ${isHero ? "controls" : "controls muted"} playsinline preload="metadata"></video>`;
+  }
+  return `<img src="${media.src}" alt="${media.alt || ""}" loading="${isHero ? "eager" : "lazy"}" />`;
+}
 
 function renderMemories() {
   grid.innerHTML = memories.map((item, index) => `
@@ -494,6 +550,7 @@ function renderMemories() {
         <span class="date">${item.date}</span>
         <h3>${item.title}</h3>
         <p>${item.desc}</p>
+        <span class="album-count">${item.media.length}컷</span>
       </div>
     </button>
   `).join("");
@@ -517,8 +574,9 @@ function updateDays() {
 function openMemory(index) {
   const item = memories[index];
   if (!item) return;
-  modalImg.src = item.image;
-  modalImg.alt = item.title;
+  const media = item.media && item.media.length ? item.media : [{ type:"image", src:item.image, alt:item.title }];
+  modalHero.innerHTML = renderMedia(media[0], true);
+  modalAlbum.innerHTML = media.map(piece => `<div class="album-tile">${renderMedia(piece)}</div>`).join("");
   modalTitle.textContent = item.title;
   modalDesc.textContent = `${item.date} · ${item.desc}`;
   modal.classList.add("open");
@@ -526,6 +584,7 @@ function openMemory(index) {
 }
 
 function closeMemory() {
+  modal.querySelectorAll("video").forEach(video => video.pause());
   modal.classList.remove("open");
   modal.setAttribute("aria-hidden", "true");
 }
