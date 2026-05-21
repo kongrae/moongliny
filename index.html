@@ -77,6 +77,8 @@ button,a { font:inherit; }
 button { cursor:pointer; }
 #root { position:relative; }
 .app {
+  position:relative;
+  z-index:1;
   width:min(1180px,100%);
   margin:0 auto;
   padding:calc(12px + env(safe-area-inset-top)) 18px 18px;
@@ -160,7 +162,7 @@ button { cursor:pointer; }
   box-shadow:0 28px 80px rgba(126,78,63,.16), inset 0 1px 0 rgba(255,255,255,.8);
 }
 .heart-rain {
-  position:absolute;
+  position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
@@ -168,18 +170,18 @@ button { cursor:pointer; }
 }
 .heart-rain span {
   position:absolute;
-  top:-24px;
+  top:-40px;
   left:var(--x);
-  color:rgba(183,110,121,.28);
+  color:rgba(183,110,121,.24);
   font-size:var(--s);
   animation:heartFall var(--d) linear infinite;
   animation-delay:var(--delay);
   filter:blur(.1px);
 }
 @keyframes heartFall {
-  0% { transform:translate3d(0,-12px,0) rotate(0deg); opacity:0; }
-  14% { opacity:.78; }
-  100% { transform:translate3d(var(--drift),520px,0) rotate(26deg); opacity:0; }
+  0% { transform:translate3d(0,-32px,0) rotate(0deg); opacity:0; }
+  12% { opacity:.76; }
+  100% { transform:translate3d(var(--drift),112vh,0) rotate(28deg); opacity:0; }
 }
 .hero-card::before {
   content:"";
@@ -188,10 +190,6 @@ button { cursor:pointer; }
   pointer-events:none;
   border:1px dashed rgba(183,110,121,.18);
   border-radius:26px;
-}
-.hero-card > *:not(.heart-rain) {
-  position:relative;
-  z-index:1;
 }
 .kicker {
   display:inline-flex;
@@ -607,8 +605,8 @@ button { cursor:pointer; }
   border-radius:28px 28px 0 0;
   padding:20px 22px;
   border-bottom:1px solid var(--line);
-  background:linear-gradient(145deg,rgba(255,250,247,.9),rgba(255,246,239,.78));
-  backdrop-filter:blur(24px) saturate(1.35);
+  background:linear-gradient(145deg,rgba(255,250,247,.72),rgba(255,246,239,.5));
+  backdrop-filter:blur(30px) saturate(1.42);
   box-shadow:0 12px 28px rgba(61,44,46,.08);
 }
 .modal-head h3 {
@@ -628,8 +626,8 @@ button { cursor:pointer; }
   display:grid;
   grid-template-columns:repeat(2,1fr);
   grid-auto-rows:max-content;
-  align-content:center;
-  align-items:center;
+  align-content:start;
+  align-items:start;
   gap:16px;
   padding:20px;
   overflow:auto;
@@ -841,13 +839,6 @@ function Intro() {
   return (
     <section className="section intro" id="intro">
       <div className="hero-card fade-up">
-        <div className="heart-rain" aria-hidden="true">
-          <span style={{ "--x":"14%", "--s":"15px", "--d":"8.5s", "--delay":"-1s", "--drift":"18px" }}>♥</span>
-          <span style={{ "--x":"34%", "--s":"11px", "--d":"10s", "--delay":"-4s", "--drift":"-12px" }}>♥</span>
-          <span style={{ "--x":"58%", "--s":"13px", "--d":"9.2s", "--delay":"-2.5s", "--drift":"16px" }}>♥</span>
-          <span style={{ "--x":"78%", "--s":"10px", "--d":"11s", "--delay":"-6s", "--drift":"-18px" }}>♥</span>
-          <span style={{ "--x":"91%", "--s":"14px", "--d":"9.8s", "--delay":"-3s", "--drift":"10px" }}>♥</span>
-        </div>
         <div>
           <span className="kicker">♥ 뭉리니 스크랩북</span>
           <h1 className="title">{CONFIG.heroTitle}</h1>
@@ -1020,6 +1011,10 @@ function MemoryModal({ memory, onClose }) {
     document.body.classList.add("modal-locked");
     window.addEventListener("keydown", handleKey);
     document.querySelector(".modal")?.addEventListener("touchmove", lockBackgroundTouch, { passive:false });
+    window.requestAnimationFrame(() => {
+      const grid = document.querySelector(".modal-grid");
+      if (grid) grid.scrollTop = 0;
+    });
     const playTimer = window.setTimeout(() => {
       document.querySelectorAll(".modal video").forEach(video => {
         if (!video.autoplay) return;
@@ -1067,6 +1062,15 @@ function App() {
   const [selectedMemory, setSelectedMemory] = React.useState(null);
   return (
     <>
+      <div className="heart-rain" aria-hidden="true">
+        <span style={{ "--x":"7%", "--s":"24px", "--d":"10.5s", "--delay":"-1s", "--drift":"24px" }}>♥</span>
+        <span style={{ "--x":"19%", "--s":"18px", "--d":"12s", "--delay":"-5s", "--drift":"-18px" }}>♥</span>
+        <span style={{ "--x":"32%", "--s":"28px", "--d":"11.2s", "--delay":"-3s", "--drift":"22px" }}>♥</span>
+        <span style={{ "--x":"48%", "--s":"20px", "--d":"13s", "--delay":"-7s", "--drift":"-26px" }}>♥</span>
+        <span style={{ "--x":"62%", "--s":"26px", "--d":"10.8s", "--delay":"-2s", "--drift":"18px" }}>♥</span>
+        <span style={{ "--x":"76%", "--s":"19px", "--d":"12.6s", "--delay":"-6s", "--drift":"-20px" }}>♥</span>
+        <span style={{ "--x":"91%", "--s":"30px", "--d":"11.8s", "--delay":"-4s", "--drift":"16px" }}>♥</span>
+      </div>
       <div className="app">
         <Nav />
         <Intro />
