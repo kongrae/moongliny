@@ -285,8 +285,8 @@ button { cursor:pointer; }
   min-height:150px;
   padding:22px;
 }
-.bento-card.large { grid-column:span 5; grid-row:span 2; }
-.bento-card.medium { grid-column:span 4; }
+.bento-card.large { grid-column:span 6; }
+.bento-card.medium { grid-column:span 3; }
 .bento-card.small { grid-column:span 3; }
 .bento-label {
   display:block;
@@ -316,13 +316,6 @@ button { cursor:pointer; }
   font-weight:900;
   font-size:12px;
   transform:rotate(-2deg);
-}
-.mini-photo {
-  min-height:180px;
-  border-radius:18px;
-  background:url("assets/seasons/winter-5.jpg") center/cover no-repeat;
-  position:relative;
-  overflow:hidden;
 }
 .album-grid {
   display:grid;
@@ -507,9 +500,6 @@ button { cursor:pointer; }
   position:sticky;
   top:0;
   z-index:2;
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
   padding:18px;
   border-bottom:1px solid var(--line);
   background:rgba(255,250,247,.92);
@@ -517,16 +507,6 @@ button { cursor:pointer; }
 }
 .modal-head h3 { margin:0 0 5px; }
 .modal-head p { margin:0; color:var(--muted); line-height:1.55; }
-.modal-close {
-  width:46px;
-  height:46px;
-  border:0;
-  border-radius:50%;
-  color:#fff;
-  background:var(--rose);
-  font-size:22px;
-  font-weight:900;
-}
 .modal-grid {
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -548,10 +528,19 @@ button { cursor:pointer; }
   object-fit:cover;
   display:block;
 }
-.modal-actions {
-  padding:0 18px 18px;
-  display:flex;
-  justify-content:center;
+.modal-close-floating {
+  position:fixed;
+  right:max(18px, env(safe-area-inset-right));
+  bottom:max(18px, env(safe-area-inset-bottom));
+  z-index:21;
+  min-width:92px;
+  height:52px;
+  border:0;
+  border-radius:999px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  box-shadow:0 18px 42px rgba(61,44,46,.26);
+  font-weight:900;
 }
 .fade-up {
   animation:fadeUp .7s ease both;
@@ -610,9 +599,9 @@ footer {
 const CONFIG = {
   anniversaryStart: "2025-05-27",
   firstMetLabel: "2025.05.27",
-  heroTitle: "Our 365 Pages",
-  heroSubtitle: "함께한 시간들이 모여, 오늘이 됐어.",
-  todaySentence: "평범한 하루도 너와 함께라서 특별했어.",
+  brandTitle: "뭉리니 기록장",
+  heroTitle: "뭉리니의 첫 번째 기록",
+  heroSubtitle: "함께한 계절들이 모여, 오늘의 우리가 됐어.",
   signature: "From. 홍래"
 };
 
@@ -686,9 +675,6 @@ const timeline = [
   { date:"2026 봄", title:"다시 피어난 우리", description:"차박과 캠핑, 나들이로 앞으로가 더 기대되는 봄." }
 ];
 
-const playlist = ["우리의 드라이브", "캠핑 밤 플레이리스트", "기념일에 듣고 싶은 노래"];
-const bucketList = ["기념일 당일 사진 채우기", "새 캠핑 장비로 1박", "제주 추억 다시 꺼내보기"];
-
 function daysTogether() {
   const start = new Date(`${CONFIG.anniversaryStart}T00:00:00`);
   const now = new Date();
@@ -709,7 +695,7 @@ function Media({ item, className = "" }) {
 function Nav() {
   return (
     <nav className="nav">
-      <div className="brand"><span className="brand-mark">♥</span>Film Diary</div>
+      <div className="brand"><span className="brand-mark">♥</span>{CONFIG.brandTitle}</div>
       <div className="nav-links">
         <a href="#summary">요약</a>
         <a href="#album">앨범</a>
@@ -725,9 +711,9 @@ function Intro() {
     <section className="section intro" id="intro">
       <div className="hero-card fade-up">
         <div>
-          <span className="kicker">♥ Anniversary scrapbook</span>
+          <span className="kicker">♥ 뭉리니 스크랩북</span>
           <h1 className="title">{CONFIG.heroTitle}</h1>
-          <p className="subtitle">{CONFIG.heroSubtitle}<br />사진과 메모를 넘기듯, 지난 1년을 천천히 꺼내보는 작은 필름 다이어리.</p>
+          <p className="subtitle">{CONFIG.heroSubtitle}<br />사진과 메모를 넘기듯, 지난 1년을 천천히 꺼내보는 작은 기록장.</p>
           <div className="actions">
             <button className="primary-btn" onClick={() => scrollToId("album")}>앨범 열기</button>
             <button className="ghost-btn" onClick={() => scrollToId("letter")}>편지 읽기</button>
@@ -750,34 +736,26 @@ function Summary() {
   return (
     <section className="section fade-up" id="summary">
       <div className="section-heading">
-        <h2>Anniversary Summary</h2>
-        <p>기념일 선물처럼 한눈에 보는 우리의 첫해. 날짜와 문장, 사진과 다음 약속을 작은 카드에 담았어.</p>
+        <h2>뭉리니 요약 카드</h2>
+        <p>처음의 컨셉처럼, 우리가 함께 쌓아온 시간을 네 장의 카드로만 담백하게 모았어.</p>
       </div>
       <div className="bento">
         <article className="bento-card large">
-          <span className="bento-label">함께한 날짜</span>
+          <span className="bento-label">함께한 날</span>
           <p className="bento-value">D+{days}</p>
           <span className="stamp">{CONFIG.firstMetLabel} - Today</span>
         </article>
-        <article className="bento-card small">
-          <span className="bento-label">처음 만난 날</span>
-          <p className="bento-text">{CONFIG.firstMetLabel}</p>
+        <article className="bento-card medium">
+          <span className="bento-label">계절처럼 쌓인 달</span>
+          <p className="bento-value">12</p>
         </article>
         <article className="bento-card medium">
-          <span className="bento-label">오늘의 문장</span>
-          <p className="bento-text">“{CONFIG.todaySentence}”</p>
-        </article>
-        <article className="bento-card medium">
-          <span className="bento-label">베스트 순간</span>
-          <div className="mini-photo"></div>
+          <span className="bento-label">다시 보고 싶은 순간</span>
+          <p className="bento-value">∞</p>
         </article>
         <article className="bento-card small">
-          <span className="bento-label">우리의 플레이리스트</span>
-          <p className="bento-text">{playlist.join(" · ")}</p>
-        </article>
-        <article className="bento-card medium">
-          <span className="bento-label">다음 데이트 버킷리스트</span>
-          <p className="bento-text">{bucketList.join(" / ")}</p>
+          <span className="bento-label">첫 번째 기념일</span>
+          <p className="bento-value">1st</p>
         </article>
       </div>
     </section>
@@ -892,7 +870,6 @@ function MemoryModal({ memory, onClose }) {
             <h3>{memory.title}</h3>
             <p>{memory.date} · {memory.place}<br />{memory.memo}</p>
           </div>
-          <button className="modal-close" type="button" onClick={onClose} aria-label="닫기">×</button>
         </div>
         <div className="modal-grid">
           {memory.media.map((item, index) => (
@@ -901,10 +878,8 @@ function MemoryModal({ memory, onClose }) {
             </div>
           ))}
         </div>
-        <div className="modal-actions">
-          <button className="ghost-btn" type="button" onClick={onClose}>앨범 닫기</button>
-        </div>
       </div>
+      <button className="modal-close-floating" type="button" onClick={onClose} aria-label="앨범 닫기">닫기</button>
     </div>
   );
 }
