@@ -99,10 +99,18 @@ button { cursor:pointer; }
   display:flex;
   align-items:center;
   gap:8px;
+  min-width:0;
   font-weight:900;
   color:var(--rose);
 }
+.brand-text {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
 .brand-mark {
+  flex:0 0 auto;
   width:26px;
   height:26px;
   border-radius:50%;
@@ -525,6 +533,7 @@ button { cursor:pointer; }
   overflow:hidden;
   overflow-anchor:none;
   border-radius:28px;
+  isolation:isolate;
   background:linear-gradient(145deg,rgba(255,255,255,.74),rgba(255,247,240,.56));
   backdrop-filter:blur(30px) saturate(1.38);
   box-shadow:0 28px 90px rgba(61,44,46,.34), inset 0 1px 0 rgba(255,255,255,.72);
@@ -532,6 +541,7 @@ button { cursor:pointer; }
 .modal-head {
   position:relative;
   flex:0 0 auto;
+  border-radius:28px 28px 0 0;
   padding:20px 22px;
   border-bottom:1px solid var(--line);
   background:linear-gradient(145deg,rgba(255,250,247,.9),rgba(255,246,239,.78));
@@ -554,26 +564,36 @@ button { cursor:pointer; }
   min-height:0;
   display:grid;
   grid-template-columns:repeat(2,1fr);
+  grid-auto-rows:max-content;
+  align-content:start;
+  align-items:start;
   gap:16px;
   padding:20px;
   overflow:auto;
   overscroll-behavior:contain;
+  border-radius:0 0 28px 28px;
   background:linear-gradient(180deg,rgba(255,247,240,.22),rgba(255,247,240,.08));
 }
 .modal-photo {
   position:relative;
   overflow:hidden;
-  min-height:260px;
+  min-height:0;
   border-radius:18px;
-  background:#ead9cd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(145deg,rgba(255,250,247,.74),rgba(234,217,205,.72));
 }
 .modal-photo img,
 .modal-photo video {
-  width:100%;
-  height:100%;
-  min-height:260px;
-  object-fit:cover;
+  width:auto;
+  max-width:100%;
+  height:auto;
+  max-height:78svh;
+  object-fit:contain;
   display:block;
+  border-radius:inherit;
 }
 .modal-close-floating {
   position:static;
@@ -629,9 +649,11 @@ footer {
   .letter-card { padding:24px; }
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell { max-height:calc(100svh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; }
+  .brand { font-size:13px; }
   .modal-card { max-height:calc(100svh - 104px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); border-radius:24px; }
-  .modal-head { padding:18px; }
-  .modal-grid { padding:14px; gap:12px; }
+  .modal-head { padding:18px; border-radius:24px 24px 0 0; }
+  .modal-grid { padding:14px; gap:12px; border-radius:0 0 24px 24px; }
+  .modal-photo img, .modal-photo video { min-height:0; max-height:72svh; }
   .modal-close-floating { height:50px; min-width:88px; }
 }
 </style>
@@ -645,7 +667,7 @@ footer {
 const CONFIG = {
   anniversaryStart: "2025-05-27",
   firstMetLabel: "2025.05.27",
-  brandTitle: "뭉리니 기록장",
+  brandTitle: "2025.05.27, 하린이와 홍래 사랑 진행 중 ♥",
   heroTitle: "뭉리니의 첫 번째 기록",
   heroSubtitle: "함께한 계절들이 모여, 오늘의 우리가 됐어.",
   signature: "From. 홍래"
@@ -741,7 +763,7 @@ function Media({ item, className = "" }) {
 function Nav() {
   return (
     <nav className="nav">
-      <div className="brand"><span className="brand-mark">♥</span>{CONFIG.brandTitle}</div>
+      <div className="brand"><span className="brand-mark">♥</span><span className="brand-text">{CONFIG.brandTitle}</span></div>
       <div className="nav-links">
         <a href="#summary">요약</a>
         <a href="#album">앨범</a>
