@@ -1015,8 +1015,6 @@ async function createSupabaseStorage() {
   return {
     async loadAnniversaryPhoto() {
       const url = publicPhotoUrl();
-      const response = await fetch(`${url}?probe=${Date.now()}`, { method:"HEAD", cache:"no-store" });
-      if (!response.ok) throw new Error("photo-not-found");
       return `${url}?v=${Date.now()}`;
     },
     async uploadAnniversaryPhoto(file, onProgress) {
