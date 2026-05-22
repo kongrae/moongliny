@@ -394,6 +394,14 @@ button { cursor:pointer; }
 .stack-upload-photo .stack-photo {
   height:100%;
 }
+.stack-photo-img {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
 .stack-upload-input {
   position:absolute;
   width:1px;
@@ -1002,6 +1010,8 @@ const supabaseConfig = {
 };
 
 const hasSupabaseConfig = Boolean(supabaseConfig.url && supabaseConfig.anonKey);
+const supabasePublicPhotoUrl = () =>
+  `${supabaseConfig.url}/storage/v1/object/public/${supabaseConfig.bucket}/${supabaseConfig.path}`;
 
 async function createSupabaseStorage() {
   const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2.45.4");
@@ -1041,13 +1051,17 @@ async function createSupabaseStorage() {
 
 window.mongliniStorage = {
   isConfigured: hasSupabaseConfig,
+  publicPhotoUrl() {
+    if (!hasSupabaseConfig) throw new Error("supabase-config-missing");
+    return `${supabasePublicPhotoUrl()}?v=${Date.now()}`;
+  },
   async ready() {
     if (!hasSupabaseConfig) throw new Error("supabase-config-missing");
     if (!this.instance) this.instance = await createSupabaseStorage();
     return this.instance;
   },
   async loadAnniversaryPhoto() {
-    return (await this.ready()).loadAnniversaryPhoto();
+    return this.publicPhotoUrl();
   },
   async uploadAnniversaryPhoto(file, onProgress) {
     return (await this.ready()).uploadAnniversaryPhoto(file, onProgress);
@@ -1192,14 +1206,11 @@ function Intro() {
       if (savedPhoto) setAnniversaryPhoto(savedPhoto);
     } catch (error) {}
     if (window.mongliniStorage?.isConfigured) {
-      window.mongliniStorage.loadAnniversaryPhoto()
-        .then(url => {
-          setAnniversaryPhoto(url);
-          try {
-            window.localStorage.setItem("monglini-anniversary-photo", url);
-          } catch (error) {}
-        })
-        .catch(() => {});
+      try {
+        const url = window.mongliniStorage.publicPhotoUrl();
+        setAnniversaryPhoto(url);
+        window.localStorage.setItem("monglini-anniversary-photo", url);
+      } catch (error) {}
     }
   }, []);
 
@@ -1286,7 +1297,9 @@ function Intro() {
             <article className={`stack-card blank${activeStackCard === "blank" ? " active" : ""}`} data-label="anniversary day" role="button" tabIndex="0" onClick={() => setActiveStackCard("blank")} onKeyDown={event => handleStackKey(event, "blank")}>
               {anniversaryPhoto ? (
                 <label className="stack-upload-photo" onClick={() => setActiveStackCard("blank")}>
-                  <span className="stack-photo" style={{ "--photo":`url("${anniversaryPhoto}")` }}></span>
+                  <span className="stack-photo">
+                    <img className="stack-photo-img" src={anniversaryPhoto} alt="기념일 당일 사진" />
+                  </span>
                   <input className="stack-upload-input" type="file" accept="image/*" onChange={handleAnniversaryPhoto} />
                 </label>
               ) : (
