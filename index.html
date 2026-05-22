@@ -991,60 +991,58 @@ footer {
 <script src="assets/vendor/react-dom.production.min.js"></script>
 <script src="assets/vendor/babel.min.js"></script>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBs0-NQ_1o38hYOHtKJ7HsRdUS0EkvqZYo",
-  authDomain: "myfirstproj1-673de.firebaseapp.com",
-  projectId: "myfirstproj1-673de",
-  storageBucket: "myfirstproj1-673de.firebasestorage.app",
-  messagingSenderId: "643568958705",
-  appId: "1:643568958705:web:38fb61db1c34d108a13d50",
-  measurementId: "G-P4S16QKW0H"
+const supabaseConfig = {
+  url: "",
+  anonKey: "",
+  bucket: "anniversary",
+  path: "current-main.jpg"
 };
 
-const PHOTO_PATH = "anniversary/current-main.jpg";
-const hasFirebaseConfig = Object.values(firebaseConfig).every(value => value && !String(value).includes("YOUR_"));
+const hasSupabaseConfig = Boolean(supabaseConfig.url && supabaseConfig.anonKey);
 
-async function createFirebaseStorage() {
-  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js");
-  const { getAuth, signInAnonymously } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js");
-  const { getStorage, ref, getDownloadURL, uploadBytesResumable } = await import("https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js");
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  await signInAnonymously(auth);
-  const storage = getStorage(app);
+async function createSupabaseStorage() {
+  const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2.45.4");
+  const client = createClient(supabaseConfig.url, supabaseConfig.anonKey);
+
+  const publicPhotoUrl = () => {
+    const { data } = client.storage.from(supabaseConfig.bucket).getPublicUrl(supabaseConfig.path);
+    return data.publicUrl;
+  };
 
   return {
     async loadAnniversaryPhoto() {
-      return getDownloadURL(ref(storage, PHOTO_PATH));
+      const url = publicPhotoUrl();
+      const response = await fetch(`${url}?probe=${Date.now()}`, { method:"HEAD", cache:"no-store" });
+      if (!response.ok) throw new Error("photo-not-found");
+      return `${url}?v=${Date.now()}`;
     },
-    uploadAnniversaryPhoto(file, onProgress) {
+    async uploadAnniversaryPhoto(file, onProgress) {
       if (!file.type.startsWith("image/")) {
-        return Promise.reject(new Error("image-only"));
+        throw new Error("image-only");
       }
       if (file.size > 12 * 1024 * 1024) {
-        return Promise.reject(new Error("file-too-large"));
+        throw new Error("file-too-large");
       }
-      const task = uploadBytesResumable(ref(storage, PHOTO_PATH), file, {
-        contentType: file.type || "image/jpeg",
-        cacheControl: "public,max-age=60"
-      });
-      return new Promise((resolve, reject) => {
-        task.on("state_changed", snapshot => {
-          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-          onProgress?.(progress);
-        }, reject, async () => {
-          resolve(await getDownloadURL(task.snapshot.ref));
+      onProgress?.(35);
+      const { error } = await client.storage
+        .from(supabaseConfig.bucket)
+        .upload(supabaseConfig.path, file, {
+          cacheControl: "60",
+          contentType: file.type || "image/jpeg",
+          upsert: true
         });
-      });
+      if (error) throw error;
+      onProgress?.(100);
+      return `${publicPhotoUrl()}?v=${Date.now()}`;
     }
   };
 }
 
 window.mongliniStorage = {
-  isConfigured: hasFirebaseConfig,
+  isConfigured: hasSupabaseConfig,
   async ready() {
-    if (!hasFirebaseConfig) throw new Error("firebase-config-missing");
-    if (!this.instance) this.instance = await createFirebaseStorage();
+    if (!hasSupabaseConfig) throw new Error("supabase-config-missing");
+    if (!this.instance) this.instance = await createSupabaseStorage();
     return this.instance;
   },
   async loadAnniversaryPhoto() {
@@ -1054,7 +1052,7 @@ window.mongliniStorage = {
     return (await this.ready()).uploadAnniversaryPhoto(file, onProgress);
   }
 };
-document.documentElement.dataset.firebaseUpload = hasFirebaseConfig ? "configured" : "waiting-config";
+document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
 <script type="text/babel">
 const CONFIG = {
@@ -1217,14 +1215,14 @@ function Intro() {
     reader.readAsDataURL(file);
 
     if (!window.mongliniStorage?.isConfigured) {
-      setUploadStatus("Firebase 설정값을 넣으면 서버에 저장돼요. 지금은 이 기기에만 임시 저장됐어요.");
+      setUploadStatus("Supabase 설정값을 넣으면 서버에 저장돼요. 지금은 이 기기에만 임시 저장됐어요.");
       window.setTimeout(() => setUploadStatus(""), 5200);
       return;
     }
 
-    setUploadStatus("Firebase에 업로드 준비 중...");
+    setUploadStatus("Supabase에 업로드 준비 중...");
     window.mongliniStorage.uploadAnniversaryPhoto(file, progress => {
-      setUploadStatus(`Firebase에 업로드 중 ${progress}%`);
+      setUploadStatus(`Supabase에 업로드 중 ${progress}%`);
     }).then(url => {
       setAnniversaryPhoto(url);
       try {
@@ -1235,7 +1233,7 @@ function Intro() {
     }).catch(error => {
       const message = error?.message === "file-too-large"
         ? "사진 용량이 커서 업로드하지 못했어요. 12MB 이하 사진으로 다시 선택해줘요."
-        : "Firebase 업로드에 실패했어요. 설정값과 Storage 규칙을 확인해줘요.";
+        : "Supabase 업로드에 실패했어요. URL, anon key, bucket policy를 확인해줘요.";
       setUploadStatus(message);
       window.setTimeout(() => setUploadStatus(""), 6200);
     });
