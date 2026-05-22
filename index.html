@@ -601,25 +601,25 @@ button { cursor:pointer; }
 }
 .modal.open { display:grid; }
 .modal.open .modal-shell {
-  animation:modalIn .32s cubic-bezier(.16,1,.3,1) both;
+  animation:modalIn .52s cubic-bezier(.16,1,.3,1) both;
 }
 .modal.closing .modal-shell {
-  animation:modalOut .24s cubic-bezier(.7,0,.84,0) both;
+  animation:modalOut .34s cubic-bezier(.7,0,.84,0) both;
 }
 .modal.open::before {
-  animation:veilIn .28s ease both;
+  animation:veilIn .42s ease both;
 }
 .modal.closing::before {
-  animation:veilOut .24s ease both;
+  animation:veilOut .32s ease both;
 }
 @keyframes modalIn {
-  from { opacity:0; transform:translateY(8px) scale(.92); filter:blur(12px); }
-  68% { opacity:1; transform:translateY(8px) scale(1.012); filter:blur(0); }
+  from { opacity:0; transform:translateY(8px) scale(.82); filter:blur(18px); }
+  55% { opacity:1; transform:translateY(8px) scale(1.025); filter:blur(2px); }
   to { opacity:1; transform:translateY(8px) scale(1); filter:blur(0); }
 }
 @keyframes modalOut {
   from { opacity:1; transform:translateY(8px) scale(1); filter:blur(0); }
-  to { opacity:0; transform:translateY(8px) scale(.94); filter:blur(10px); }
+  to { opacity:0; transform:translateY(8px) scale(.86); filter:blur(16px); }
 }
 @keyframes veilIn {
   from { opacity:0; }
@@ -683,6 +683,8 @@ button { cursor:pointer; }
   background:var(--aura);
   -webkit-background-clip:text;
   background-clip:text;
+  font-size:clamp(27px,4.4vw,42px);
+  line-height:1.18;
   text-shadow:0 1px 0 rgba(255,255,255,.42);
 }
 .modal-head p {
@@ -705,6 +707,7 @@ button { cursor:pointer; }
   overscroll-behavior:contain;
   border-radius:0 0 28px 28px;
   background:linear-gradient(180deg,rgba(255,247,240,.14),rgba(255,247,240,.04));
+  font-size:18px;
 }
 .modal-photo {
   position:relative;
@@ -731,7 +734,7 @@ button { cursor:pointer; }
   background:linear-gradient(145deg,rgba(255,255,255,.42),rgba(255,247,240,.18));
   backdrop-filter:blur(24px) saturate(1.35);
   box-shadow:0 10px 24px rgba(61,44,46,.08), inset 0 1px 0 rgba(255,255,255,.66);
-  font-size:14px;
+  font-size:16px;
   font-weight:750;
   line-height:1.55;
 }
@@ -800,18 +803,20 @@ footer {
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell { max-height:calc(100svh - 18px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; transform:translateY(4px); }
   @keyframes modalIn {
-    from { opacity:0; transform:translateY(4px) scale(.92); filter:blur(12px); }
-    68% { opacity:1; transform:translateY(4px) scale(1.012); filter:blur(0); }
+    from { opacity:0; transform:translateY(4px) scale(.82); filter:blur(18px); }
+    55% { opacity:1; transform:translateY(4px) scale(1.025); filter:blur(2px); }
     to { opacity:1; transform:translateY(4px) scale(1); filter:blur(0); }
   }
   @keyframes modalOut {
     from { opacity:1; transform:translateY(4px) scale(1); filter:blur(0); }
-    to { opacity:0; transform:translateY(4px) scale(.94); filter:blur(10px); }
+    to { opacity:0; transform:translateY(4px) scale(.86); filter:blur(16px); }
   }
   .brand { font-size:13px; }
   .modal-card { max-height:calc(100svh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); border-radius:24px; }
-  .modal-head { min-height:72px; padding:18px; border-radius:24px 24px 0 0; }
+  .modal-head { min-height:76px; padding:18px; border-radius:24px 24px 0 0; }
+  .modal-head h3 { font-size:26px; }
   .modal-grid { padding:14px; gap:12px; border-radius:0 0 24px 24px; }
+  .modal-caption { font-size:15px; }
   .modal-photo img, .modal-photo video { min-height:0; max-height:72svh; }
   .modal-close-floating { height:50px; min-width:88px; }
 }
@@ -963,7 +968,7 @@ function Summary() {
   return (
     <section className="section fade-up" id="summary">
       <div className="section-heading">
-        <h2>뭉리니 요약 카드</h2>
+        <h2>Memory Summary</h2>
         <p>처음의 컨셉처럼, 우리가 함께 쌓아온 시간을 네 장의 카드로만 담백하게 모았어.</p>
       </div>
       <div className="bento">
