@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=69" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=69" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=69" />
+<link rel="manifest" href="manifest.webmanifest?v=70" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=70" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=70" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -630,7 +630,7 @@ button { cursor:pointer; }
 .letter-photo {
   min-height:320px;
   border-radius:0;
-  background:url("assets/letter-photo.jpg?v=54") center 26%/cover no-repeat;
+  background:url("assets/letter-photo.jpg?v=54") center 38%/cover no-repeat;
   box-shadow:none;
 }
 .letter-card {
@@ -745,16 +745,16 @@ button { cursor:pointer; }
 }
 .memory-connector {
   width:min(980px,100%);
-  margin:-16px auto -4px;
+  margin:18px auto;
   padding:0;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  gap:1px;
+  gap:2px;
   color:rgba(183,110,121,.78);
-  font-size:20px;
-  line-height:.28;
+  font-size:22px;
+  line-height:.34;
   text-shadow:0 8px 20px rgba(183,110,121,.14);
   border-radius:0;
   background:transparent;
@@ -765,7 +765,7 @@ button { cursor:pointer; }
 .memory-connector::after {
   content:"";
   width:1px;
-  height:10px;
+  height:14px;
   background:linear-gradient(180deg,transparent,rgba(183,110,121,.28),transparent);
 }
 .current-photo {
@@ -1242,7 +1242,7 @@ footer {
   .bento-label { font-size:12px; }
   .stats, .album-grid, .modal-grid { grid-template-columns:1fr; }
   .polaroid { transform:rotate(0deg) !important; }
-  .letter-photo { min-height:190px; background-position:center 22%; }
+  .letter-photo { min-height:190px; background-position:center 34%; }
   .letter-card { padding:24px; border-left:0; border-top:1px solid rgba(183,110,121,.12); }
   .letter-body { max-height:0; }
   .letter-card.expanded .letter-body { max-height:2200px; overflow:hidden; }
@@ -1340,6 +1340,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=69" defer></script>
+<script src="assets/app.js?v=70" defer></script>
 </body>
 </html>
