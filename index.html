@@ -609,7 +609,7 @@ button { cursor:pointer; }
 .letter-photo {
   min-height:420px;
   border-radius:26px;
-  background:url("assets/main-hero-cropped.jpg") center 45%/cover no-repeat;
+  background:url("assets/main-hero-cropped.jpg?v=51") center 45%/cover no-repeat;
   box-shadow:var(--soft);
 }
 .letter-card {
@@ -1302,7 +1302,7 @@ function Intro() {
     { key:"sea", label:"파란 장면", src:"assets/hero-stack/stack-2.jpg", className:"back-b" },
     { key:"cafe", label:"카페의 우리", src:"assets/hero-stack/stack-3.jpg", className:"back-c" },
     { key:"picnic", label:"햇살 나들이", src:"assets/hero-stack/stack-4.jpg", className:"back-d" },
-    { key:"center", label:"첫 화면", src:"assets/main-hero-cropped.jpg", className:"center" }
+    { key:"center", label:"첫 화면", src:"assets/main-hero-cropped.jpg?v=51", className:"center" }
   ];
   const activeHeroCard = heroCards.find(card => card.key === activeStackCard) || heroCards[4];
 
