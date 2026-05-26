@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=71" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=71" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=71" />
+<link rel="manifest" href="manifest.webmanifest?v=72" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=72" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=72" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -770,11 +770,12 @@ button { cursor:pointer; }
 }
 .current-photo {
   position:relative;
-  min-height:392px;
-  padding:26px 20px 70px;
+  min-height:0;
+  padding:30px 22px 78px;
   border:1px solid rgba(255,255,255,.82);
   display:block;
   background:
+    repeating-linear-gradient(135deg,rgba(126,78,63,.035) 0 1px,transparent 1px 18px),
     linear-gradient(180deg,rgba(255,253,249,.95),rgba(255,248,242,.82)),
     var(--glass-bg);
   backdrop-filter:blur(20px) saturate(1.18);
@@ -789,10 +790,10 @@ button { cursor:pointer; }
   content:"";
   position:absolute;
   z-index:2;
-  top:10px;
+  top:12px;
   left:50%;
-  width:108px;
-  height:30px;
+  width:124px;
+  height:32px;
   border-radius:6px;
   background:
     linear-gradient(135deg,rgba(255,255,255,.28),transparent 48%),
@@ -802,11 +803,11 @@ button { cursor:pointer; }
   pointer-events:none;
 }
 .current-photo::after {
-  content:"2026.05.27  지금의 우리";
+  content:"2026.05.27  그때의 우리, 지금도 그대로";
   position:absolute;
   left:24px;
   right:24px;
-  bottom:22px;
+  bottom:24px;
   color:#8a5b55;
   font-family:var(--display);
   font-size:18px;
@@ -823,7 +824,7 @@ button { cursor:pointer; }
   min-height:296px;
   place-items:center;
   overflow:hidden;
-  border-radius:12px;
+  border-radius:10px;
   cursor:pointer;
   background:
     linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,240,.36)),
@@ -833,6 +834,29 @@ button { cursor:pointer; }
     inset 0 0 0 1px rgba(255,255,255,.5),
     0 16px 32px rgba(126,78,63,.1);
   transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+.current-upload-label::before,
+.current-upload-label::after {
+  content:"";
+  position:absolute;
+  z-index:2;
+  width:42px;
+  height:42px;
+  border-color:rgba(255,250,247,.9);
+  pointer-events:none;
+  filter:drop-shadow(0 6px 12px rgba(126,78,63,.1));
+}
+.current-upload-label::before {
+  left:10px;
+  top:10px;
+  border-left:7px solid rgba(255,250,247,.9);
+  border-top:7px solid rgba(255,250,247,.9);
+}
+.current-upload-label::after {
+  right:10px;
+  bottom:10px;
+  border-right:7px solid rgba(255,250,247,.9);
+  border-bottom:7px solid rgba(255,250,247,.9);
 }
 .current-upload-label:hover {
   transform:translateY(-2px);
@@ -870,8 +894,20 @@ button { cursor:pointer; }
   backdrop-filter:blur(18px) saturate(1.18);
 }
 .current-photo.has-photo .current-upload-label {
+  display:block;
+  min-height:0;
   border-style:solid;
   border-color:rgba(126,78,63,.14);
+}
+.current-photo.has-photo .current-photo-surface {
+  position:relative;
+  inset:auto;
+  display:block;
+}
+.current-photo.has-photo .current-photo-surface img {
+  width:100%;
+  height:auto;
+  object-fit:contain;
 }
 .current-photo.has-photo .current-placeholder {
   position:absolute;
@@ -1380,6 +1416,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=71" defer></script>
+<script src="assets/app.js?v=72" defer></script>
 </body>
 </html>
