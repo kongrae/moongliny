@@ -634,19 +634,6 @@ function MemoryModal({
     if (!mediaCount) return;
     const nextIndex = Math.max(0, Math.min(index, mediaCount - 1));
     setActiveIndex(nextIndex);
-    window.requestAnimationFrame(() => {
-      document.querySelectorAll(".modal-memory").forEach((slide, slideIndex) => {
-        const video = slide.querySelector("video");
-        if (!video || !video.autoplay) return;
-        video.controls = false;
-        video.muted = true;
-        if (slideIndex === nextIndex) {
-          video.play?.().catch(() => {});
-        } else {
-          video.pause?.();
-        }
-      });
-    });
   }, [mediaCount]);
   React.useEffect(() => {
     setActiveIndex(0);
@@ -697,13 +684,18 @@ function MemoryModal({
       passive: false
     });
     const playTimer = window.setTimeout(() => {
+      const activeVideo = document.querySelector(".modal-memory:first-child video");
+      if (activeVideo?.autoplay) {
+        activeVideo.muted = true;
+        activeVideo.controls = false;
+        activeVideo.playsInline = true;
+        activeVideo.currentTime = 0;
+        activeVideo.play?.().catch(() => {});
+      }
       document.querySelectorAll(".modal video").forEach(video => {
+        if (video === activeVideo) return;
         if (!video.autoplay) return;
-        video.muted = true;
-        video.controls = false;
-        video.playsInline = true;
-        video.currentTime = 0;
-        video.play?.().catch(() => {});
+        video.pause?.();
       });
     }, 120);
     return () => {

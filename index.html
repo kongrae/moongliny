@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=64" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=64" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=64" />
+<link rel="manifest" href="manifest.webmanifest?v=65" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=65" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=65" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -170,11 +170,7 @@ button { cursor:pointer; }
   box-shadow:0 28px 80px rgba(126,78,63,.16), inset 0 1px 0 rgba(255,255,255,.8);
 }
 .heart-rain {
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
+  display:none;
 }
 .heart-rain span {
   position:absolute;
@@ -185,6 +181,9 @@ button { cursor:pointer; }
   animation:heartFall var(--d) linear infinite;
   animation-delay:var(--delay);
   filter:blur(.1px);
+}
+.heart-rain span:nth-child(n+8) {
+  display:none;
 }
 @keyframes heartFall {
   0% { transform:translate3d(0,-32px,0) rotate(0deg); opacity:0; }
@@ -635,6 +634,12 @@ button { cursor:pointer; }
 .letter-card.expanded {
   padding-bottom:38px;
 }
+.letter-card:not(.expanded) {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:220px;
+}
 .hand-title {
   margin:0 0 20px;
   color:var(--rose);
@@ -645,8 +650,8 @@ button { cursor:pointer; }
 }
 .letter-body {
   overflow:hidden;
-  max-height:156px;
-  opacity:.88;
+  max-height:0;
+  opacity:0;
   transition:max-height .34s cubic-bezier(.2,.78,.24,1), opacity .24s ease;
 }
 .letter-card.expanded .letter-body {
@@ -665,6 +670,9 @@ button { cursor:pointer; }
   opacity:1;
   transition:opacity .2s ease;
   background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.86));
+}
+.letter-card:not(.expanded) .letter-body::after {
+  display:none;
 }
 .letter-card.expanded .letter-body::after {
   opacity:0;
@@ -719,7 +727,8 @@ button { cursor:pointer; }
 }
 .memory-connector {
   width:min(980px,100%);
-  margin:-4px auto -4px;
+  margin:8px auto;
+  padding:14px 0;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -728,7 +737,11 @@ button { cursor:pointer; }
   color:rgba(183,110,121,.78);
   font-size:38px;
   line-height:.42;
-  text-shadow:0 10px 24px rgba(183,110,121,.2);
+  text-shadow:none;
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.46),rgba(255,247,240,.18));
+  border:1px solid rgba(255,255,255,.58);
+  box-shadow:0 12px 32px rgba(126,78,63,.08), inset 0 1px 0 rgba(255,255,255,.56);
 }
 .memory-connector::before,
 .memory-connector::after {
@@ -1169,6 +1182,18 @@ footer {
   .current-wrap { grid-template-columns:1fr; }
   .hero-photo-wrap { min-height:430px; }
   .album-grid { grid-template-columns:repeat(2,1fr); }
+  .nav,
+  .hero-card,
+  .bento-card,
+  .polaroid,
+  .current-photo,
+  .modal-head,
+  .modal-grid,
+  .modal-caption,
+  .modal-pager,
+  .modal-nav {
+    backdrop-filter:none;
+  }
 }
 @media (max-width:640px) {
   .app { padding:calc(10px + env(safe-area-inset-top)) 12px 12px; }
@@ -1199,7 +1224,7 @@ footer {
   .polaroid { transform:rotate(0deg) !important; }
   .letter-photo { min-height:260px; }
   .letter-card { padding:24px; }
-  .letter-body { max-height:220px; }
+  .letter-body { max-height:0; }
   .letter-card.expanded .letter-body { max-height:none; overflow:visible; }
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell {
@@ -1295,6 +1320,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=64" defer></script>
+<script src="assets/app.js?v=65" defer></script>
 </body>
 </html>
