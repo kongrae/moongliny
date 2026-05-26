@@ -1,4 +1,4 @@
-const CACHE_NAME = "anniversary-memory-v53";
+const CACHE_NAME = "anniversary-memory-v54";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,6 +7,7 @@ const APP_SHELL = [
   "./assets/vendor/react-dom.production.min.js",
   "./assets/vendor/babel.min.js",
   "./assets/main-hero-cropped.jpg",
+  "./assets/letter-photo.jpg",
   "./assets/hero-stack/stack-1.jpg",
   "./assets/hero-stack/stack-2.jpg",
   "./assets/hero-stack/stack-3.jpg",

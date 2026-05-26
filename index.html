@@ -613,7 +613,7 @@ button { cursor:pointer; }
 .letter-photo {
   min-height:420px;
   border-radius:26px;
-  background:url("assets/main-hero-cropped.jpg?v=51") center 45%/cover no-repeat;
+  background:url("assets/letter-photo.jpg?v=54") center 54%/cover no-repeat;
   box-shadow:var(--soft);
 }
 .letter-card {
@@ -785,25 +785,24 @@ button { cursor:pointer; }
 }
 .modal.open { display:grid; }
 .modal.open .modal-shell {
-  animation:modalIn .72s cubic-bezier(.16,1,.3,1) both;
+  animation:modalIn .34s cubic-bezier(.2,.8,.2,1) both;
 }
 .modal.closing .modal-shell {
-  animation:modalOut .38s cubic-bezier(.7,0,.84,0) both;
+  animation:modalOut .22s cubic-bezier(.4,0,1,1) both;
 }
 .modal.open::before {
-  animation:veilIn .58s ease both;
+  animation:veilIn .26s ease both;
 }
 .modal.closing::before {
-  animation:veilOut .34s ease both;
+  animation:veilOut .2s ease both;
 }
 @keyframes modalIn {
-  from { opacity:0; transform:translateY(8px) scale(.68); filter:blur(28px); }
-  62% { opacity:1; transform:translateY(8px) scale(1.04); filter:blur(3px); }
-  to { opacity:1; transform:translateY(8px) scale(1); filter:blur(0); }
+  from { opacity:0; transform:translate3d(0,18px,0) scale(.965); filter:blur(8px); }
+  to { opacity:1; transform:translate3d(0,8px,0) scale(1); filter:blur(0); }
 }
 @keyframes modalOut {
   from { opacity:1; transform:translateY(8px) scale(1); filter:blur(0); }
-  to { opacity:0; transform:translateY(8px) scale(.72); filter:blur(24px); }
+  to { opacity:0; transform:translate3d(0,14px,0) scale(.975); filter:blur(6px); }
 }
 @keyframes veilIn {
   from { opacity:0; }
@@ -913,8 +912,9 @@ button { cursor:pointer; }
   height:100%;
   display:flex;
   gap:var(--slide-gap);
-  transition:transform .42s cubic-bezier(.16,1,.3,1);
+  transition:transform .26s cubic-bezier(.22,.8,.24,1);
   will-change:transform;
+  transform-style:preserve-3d;
 }
 .modal-photo {
   position:relative;
@@ -1073,13 +1073,12 @@ footer {
   .modal { padding:calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom)); }
   .modal-shell { max-height:calc(100svh - 18px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; transform:translateY(4px); }
   @keyframes modalIn {
-    from { opacity:0; transform:translateY(4px) scale(.68); filter:blur(28px); }
-    62% { opacity:1; transform:translateY(4px) scale(1.04); filter:blur(3px); }
-    to { opacity:1; transform:translateY(4px) scale(1); filter:blur(0); }
+    from { opacity:0; transform:translate3d(0,14px,0) scale(.97); filter:blur(7px); }
+    to { opacity:1; transform:translate3d(0,4px,0) scale(1); filter:blur(0); }
   }
   @keyframes modalOut {
     from { opacity:1; transform:translateY(4px) scale(1); filter:blur(0); }
-    to { opacity:0; transform:translateY(4px) scale(.72); filter:blur(24px); }
+    to { opacity:0; transform:translate3d(0,10px,0) scale(.98); filter:blur(5px); }
   }
   .brand { font-size:13px; }
   .modal-card { max-height:calc(100svh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); gap:12px; }
@@ -1745,7 +1744,7 @@ function App() {
     window.setTimeout(() => {
       setSelectedMemory(null);
       setIsModalClosing(false);
-    }, 380);
+    }, 240);
   }, [selectedMemory]);
   return (
     <>
