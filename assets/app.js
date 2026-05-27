@@ -606,9 +606,9 @@ function FinalSection() {
     className: "paper-card final-card"
   }, React.createElement("h2", {
     className: "hand-title"
-  }, "앞으로의 우리에게 남기는 말"), React.createElement("p", {
+  }, "앞으로도 우리답게"), React.createElement("p", {
     className: "bento-text"
-  }, "아직 함께 채워갈 페이지가 더 많아서 좋아."), React.createElement("div", {
+  }, "지금처럼 천천히, 오래오래 함께 써 내려가자."), React.createElement("div", {
     className: "actions",
     style: {
       justifyContent: "center"
