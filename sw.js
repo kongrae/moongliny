@@ -1,4 +1,4 @@
-const CACHE_NAME = "moongliny-v72";
+const CACHE_NAME = "moongliny-v73";
 const APP_SHELL = [
   "./",
   "./index.html",

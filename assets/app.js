@@ -115,7 +115,7 @@ const memories = [{
   title: "겨울, 따뜻한 쪽으로",
   place: "차, 캠핑, 스키장",
   memo: "함께 여행할 차가 생기고, 캠핑이라는 취미도 만들고, 스키장까지 다녀오며 추억을 차곡차곡 쌓았던 계절.",
-  image: "assets/optimized/seasons/winter-5.webp",
+  image: "assets/optimized/seasons/winter-1.webp",
   tilt: "-1.2deg",
   media: [{
     type: "image",
@@ -155,7 +155,7 @@ const memories = [{
   title: "봄, 다시 피어난 우리",
   place: "차박, 캠핑, 나들이",
   memo: "차박, 캠핑, 나들이로 이곳저곳 많이 다녔고, 업그레이드된 캠핑 장비 덕분에 앞으로가 더 기대되는 계절.",
-  image: "assets/optimized/seasons/spring-2.webp",
+  image: "assets/optimized/seasons/spring-1.webp",
   tilt: "2deg",
   media: [{
     type: "image",

@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=72" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=72" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=72" />
+<link rel="manifest" href="manifest.webmanifest?v=73" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=73" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=73" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -635,6 +635,9 @@ button { cursor:pointer; }
 }
 .letter-card {
   position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
   padding:34px;
   border-radius:0;
   background:
@@ -643,14 +646,12 @@ button { cursor:pointer; }
   border:0;
   border-left:1px solid rgba(183,110,121,.12);
   box-shadow:none;
-  transition:min-height .32s ease, padding .28s ease, box-shadow .28s ease;
+  transition:min-height .62s cubic-bezier(.2,.72,.18,1), padding .48s cubic-bezier(.2,.72,.18,1), box-shadow .42s ease;
 }
 .letter-card.expanded {
   padding-bottom:38px;
 }
 .letter-card:not(.expanded) {
-  display:flex;
-  flex-direction:column;
   justify-content:center;
   min-height:220px;
 }
@@ -661,17 +662,26 @@ button { cursor:pointer; }
   font-weight:950;
   font-size:clamp(28px,5vw,44px);
   line-height:1.15;
+  transition:margin .42s cubic-bezier(.2,.72,.18,1), transform .42s cubic-bezier(.2,.72,.18,1);
+}
+.letter-card:not(.expanded) .hand-title {
+  margin-bottom:14px;
 }
 .letter-body {
   overflow:hidden;
   max-height:0;
   opacity:0;
   clip-path:inset(0 0 100% 0);
-  transform:translateY(-8px);
-  transition:max-height .5s cubic-bezier(.2,.78,.24,1), clip-path .46s cubic-bezier(.2,.78,.24,1), opacity .28s ease, transform .34s ease;
+  transform:translateY(-10px);
+  will-change:max-height, opacity, transform, clip-path;
+  transition:
+    max-height .82s cubic-bezier(.18,.78,.2,1),
+    clip-path .74s cubic-bezier(.18,.78,.2,1),
+    opacity .42s ease,
+    transform .58s cubic-bezier(.18,.78,.2,1);
 }
 .letter-card.expanded .letter-body {
-  max-height:1800px;
+  max-height:2200px;
   overflow:hidden;
   opacity:1;
   clip-path:inset(0 0 0 0);
@@ -803,7 +813,7 @@ button { cursor:pointer; }
   pointer-events:none;
 }
 .current-photo::after {
-  content:"2026.05.27  그때의 우리, 지금도 그대로";
+  content:"2026.05.27  1년 전 그 마음 그대로";
   position:absolute;
   left:24px;
   right:24px;
@@ -1416,6 +1426,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=72" defer></script>
+<script src="assets/app.js?v=73" defer></script>
 </body>
 </html>
