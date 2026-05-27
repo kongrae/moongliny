@@ -1,7 +1,7 @@
 const CONFIG = {
   anniversaryStart: "2025-05-27",
   firstMetLabel: "2025.05.27",
-  brandTitle: "하린 ♥ 홍래 | Day 365",
+  brandTitle: "하린 ♥ 홍래 | Moongliny | Day 365",
   heroTitle: "가장 행복했던 365일",
   heroSubtitle: "함께한 시간들을 돌아보면,\n웃음과 추억으로 가득한 1년이었어.",
   signature: "From. 홍래"
