@@ -234,23 +234,23 @@ const memories = [{
 const timeline = [{
   date: "2025.05.27",
   title: "우리가 시작된 날",
-  description: "조금 서툴렀지만, 내 행복의 시작점"
+  description: "조금 서툴렀지만, 행복이 시작된 날"
 }, {
   date: "2025 여름",
   title: "우리라는 계절의 시작",
-  description: "설레임에 더운줄도 몰랐던 날들"
+  description: "설렘에 더위도 잊었던 날들"
 }, {
   date: "2025 가을",
   title: "제주도와 테니스",
-  description: "선선한 날씨와 함께 추억을 쌓아나가던 날들"
+  description: "추억이 자연스럽게 쌓여가던 계절"
 }, {
   date: "2025 겨울",
   title: "스키장, 차, 캠핑",
-  description: "함께 떠날 수 있는 길이 더 넓어진 계절."
+  description: "함께 떠날 수 있는 길이 더 넓어진 계절"
 }, {
   date: "2026 봄",
   title: "다시 피어난 우리",
-  description: "차박과 캠핑, 나들이로 앞으로가 더 기대되는 봄."
+  description: "우리의 다음 계절이 더 기대되는 봄"
 }];
 function daysTogether() {
   const start = new Date(`${CONFIG.anniversaryStart}T00:00:00`);
