@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="뭉리니♥" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="manifest" href="manifest.webmanifest?v=73" />
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=73" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=73" />
+<link rel="manifest" href="manifest.webmanifest?v=74" />
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=74" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png?v=74" />
 <title>뭉리니♥</title>
 <style>
 :root {
@@ -26,11 +26,11 @@
   --brown:#c98f70;
   --aura:linear-gradient(120deg,#7b4e45 0%,#b76e79 34%,#d89a78 68%,#8f6f62 100%);
   --line:rgba(112,78,67,.16);
-  --glass-bg:linear-gradient(145deg,rgba(255,255,255,.58),rgba(255,247,240,.28));
-  --glass-border:rgba(255,255,255,.76);
-  --glass-shadow:0 18px 52px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.74);
+  --glass-bg:linear-gradient(145deg,rgba(255,255,255,.5),rgba(255,247,240,.24));
+  --glass-border:rgba(255,255,255,.68);
+  --glass-shadow:0 14px 38px rgba(126,78,63,.09), inset 0 1px 0 rgba(255,255,255,.68);
   --shadow:var(--glass-shadow);
-  --soft:0 14px 34px rgba(126,78,63,.1), inset 0 1px 0 rgba(255,255,255,.64);
+  --soft:0 10px 26px rgba(126,78,63,.075), inset 0 1px 0 rgba(255,255,255,.58);
 }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
@@ -107,7 +107,7 @@ button { cursor:pointer; }
   border-radius:999px;
   background:linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,247,240,.32));
   backdrop-filter:blur(18px) saturate(1.2);
-  box-shadow:0 14px 38px rgba(126,78,63,.12), inset 0 1px 0 rgba(255,255,255,.82);
+  box-shadow:0 12px 30px rgba(126,78,63,.1), inset 0 1px 0 rgba(255,255,255,.78);
 }
 .brand {
   display:flex;
@@ -506,11 +506,11 @@ button { cursor:pointer; }
   width:100%;
   border:1px solid var(--glass-border);
   text-align:left;
-  padding:14px;
-  border-radius:26px;
-  background:var(--glass-bg);
-  backdrop-filter:blur(20px) saturate(1.18);
-  box-shadow:var(--glass-shadow);
+  padding:12px 12px 14px;
+  border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,250,246,.42));
+  backdrop-filter:blur(14px) saturate(1.08);
+  box-shadow:0 12px 32px rgba(126,78,63,.085), inset 0 1px 0 rgba(255,255,255,.72);
   cursor:pointer;
   transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
 }
@@ -519,17 +519,17 @@ button { cursor:pointer; }
   outline-offset:4px;
 }
 .polaroid:hover {
-  transform:translateY(-4px) scale(1.015) rotate(var(--tilt));
+  transform:translateY(-3px) scale(1.01) rotate(var(--tilt));
   border-color:rgba(255,255,255,.9);
-  background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(255,247,240,.3));
-  box-shadow:0 24px 68px rgba(77,48,38,.18), inset 0 1px 0 rgba(255,255,255,.82);
+  background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,247,240,.36));
+  box-shadow:0 18px 46px rgba(77,48,38,.13), inset 0 1px 0 rgba(255,255,255,.8);
 }
 .photo-surface {
   position:relative;
   overflow:hidden;
   aspect-ratio:4/3;
   border:1px solid rgba(255,255,255,.58);
-  border-radius:18px;
+  border-radius:16px;
   background:linear-gradient(145deg,rgba(255,250,247,.72),rgba(234,217,205,.58));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.62);
 }
@@ -541,23 +541,21 @@ button { cursor:pointer; }
   display:block;
 }
 .polaroid-meta {
-  padding:14px 4px 2px;
+  padding:12px 4px 2px;
 }
 .polaroid-meta time {
-  color:var(--rose);
-  font-size:13px;
-  font-weight:900;
+  color:#9c6a61;
+  font-size:12px;
+  font-weight:850;
 }
 .polaroid-meta h3 {
-  margin:6px 0 5px;
+  margin:5px 0 0;
   color:var(--deep);
-  font-size:21px;
+  font-size:19px;
+  line-height:1.25;
 }
 .polaroid-meta p {
-  margin:0;
-  color:var(--muted);
-  line-height:1.55;
-  font-size:15px;
+  display:none;
 }
 .timeline {
   position:relative;
@@ -641,8 +639,8 @@ button { cursor:pointer; }
   padding:34px;
   border-radius:0;
   background:
-    linear-gradient(90deg,rgba(201,143,112,.12) 1px,transparent 1px) 0 0/28px 100%,
-    rgba(255,255,255,.42);
+    linear-gradient(90deg,rgba(183,110,121,.08) 1px,transparent 1px) 0 0/30px 100%,
+    linear-gradient(180deg,rgba(255,252,248,.7),rgba(255,247,240,.46));
   border:0;
   border-left:1px solid rgba(183,110,121,.12);
   box-shadow:none;
@@ -657,7 +655,7 @@ button { cursor:pointer; }
 }
 .hand-title {
   margin:0 0 20px;
-  color:var(--rose);
+  color:#a7616b;
   font-family:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,sans-serif;
   font-weight:950;
   font-size:clamp(28px,5vw,44px);
@@ -708,8 +706,8 @@ button { cursor:pointer; }
 .letter-card p {
   margin:0 0 16px;
   color:var(--deep);
-  line-height:1.9;
-  font-size:17px;
+  line-height:1.86;
+  font-size:16.5px;
 }
 .letter-toggle {
   position:relative;
@@ -719,13 +717,13 @@ button { cursor:pointer; }
   justify-content:center;
   gap:8px;
   margin-top:8px;
-  min-height:46px;
-  padding:0 18px;
-  border:1px solid rgba(183,110,121,.18);
+  min-height:42px;
+  padding:0 16px;
+  border:1px solid rgba(183,110,121,.22);
   border-radius:999px;
-  color:#fff;
-  background:linear-gradient(135deg,var(--coral),var(--rose));
-  box-shadow:0 14px 32px rgba(183,110,121,.22);
+  color:#8f5b57;
+  background:rgba(255,250,247,.78);
+  box-shadow:0 10px 22px rgba(126,78,63,.09), inset 0 1px 0 rgba(255,255,255,.76);
   font-weight:900;
 }
 .letter-toggle::after {
@@ -781,7 +779,7 @@ button { cursor:pointer; }
 .current-photo {
   position:relative;
   min-height:0;
-  padding:30px 22px 78px;
+  padding:30px 22px 82px;
   border:1px solid rgba(255,255,255,.82);
   display:block;
   background:
@@ -790,8 +788,8 @@ button { cursor:pointer; }
     var(--glass-bg);
   backdrop-filter:blur(20px) saturate(1.18);
   box-shadow:
-    0 28px 72px rgba(126,78,63,.16),
-    0 10px 24px rgba(183,110,121,.08),
+    0 20px 54px rgba(126,78,63,.12),
+    0 8px 20px rgba(183,110,121,.06),
     inset 0 1px 0 rgba(255,255,255,.82);
   color:var(--rose);
   font-weight:900;
@@ -818,9 +816,9 @@ button { cursor:pointer; }
   left:24px;
   right:24px;
   bottom:24px;
-  color:#8a5b55;
+  color:#7f554e;
   font-family:var(--display);
-  font-size:18px;
+  font-size:17px;
   font-weight:950;
   letter-spacing:.02em;
   text-align:center;
@@ -842,7 +840,7 @@ button { cursor:pointer; }
   border:1px solid rgba(126,78,63,.16);
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.5),
-    0 16px 32px rgba(126,78,63,.1);
+    0 12px 28px rgba(126,78,63,.08);
   transition:transform .28s ease, box-shadow .28s ease, border-color .28s ease;
 }
 .current-upload-label::before,
@@ -871,7 +869,7 @@ button { cursor:pointer; }
 .current-upload-label:hover {
   transform:translateY(-2px);
   border-color:rgba(183,110,121,.34);
-  box-shadow:0 20px 44px rgba(126,78,63,.14);
+  box-shadow:0 16px 38px rgba(126,78,63,.11);
 }
 .current-photo-surface {
   position:absolute;
@@ -1426,6 +1424,6 @@ window.mongliniStorage = {
 };
 document.documentElement.dataset.supabaseUpload = hasSupabaseConfig ? "configured" : "waiting-config";
 </script>
-<script src="assets/app.js?v=73" defer></script>
+<script src="assets/app.js?v=74" defer></script>
 </body>
 </html>
